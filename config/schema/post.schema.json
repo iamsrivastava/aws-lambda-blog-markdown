@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "properties": {
+    "posts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "author": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "author",
+              "date",
+              "tags"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "metadata",
+          "title",
+          "description",
+          "url",
+          "filename"
+        ]
+      }
+    }
+  },
+  "required": [
+    "posts"
+  ]
+}

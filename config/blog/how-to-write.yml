@@ -1,0 +1,12 @@
+# Individual blog post entries
+posts:
+  - metadata:
+      author: Ashish Srivastava
+      date: 15-10-2023
+      tags:
+        - technology
+        - programming
+    title: How to Write
+    description: How to Write blog with dainiki
+    url: how-to-write
+    filename: how-to-write.md

@@ -4,4 +4,5 @@ site:
   favicon: /favicon.ico
   title: My Blog
   description: A collection of thoughts and ideas.
+  date_format: dd-mm-yyyy
 

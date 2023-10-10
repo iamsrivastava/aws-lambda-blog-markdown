@@ -1,0 +1,37 @@
+{
+  "name": "dainiki",
+  "version": "1.0.0",
+  "description": "Are you looking to build a lightning-fast, cost-effective, and scalable blogging platform powered by AWS Lambda and Markdown? Look no further! Our open-source project, AWS Lambda Blog Markdown, is your go-to solution. ",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamsrivastava/dainiki.git"
+  },
+  "keywords": [
+    "dainiki",
+    "aws",
+    "blog",
+    "lambda"
+  ],
+  "author": "Ashish Srivastava (iamsrivastava)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamsrivastava/dainiki/issues"
+  },
+  "homepage": "https://github.com/iamsrivastava/dainiki#readme",
+  "dependencies": {
+    "@sailplane/logger": "^4.2.0",
+    "ajv": "^8.12.0",
+    "dotenv": "^16.3.1",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "semantic-release": "^22.0.5"
+  }
+}

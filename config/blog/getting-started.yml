@@ -1,0 +1,12 @@
+# Individual blog post entries
+posts:
+  - metadata:
+      author: Ashish Srivastava
+      date: 15-10-2023
+      tags:
+        - technology
+        - programming
+    title: Getting Started
+    description: A brief introduction to my blogging journey.
+    url: getting-started
+    filename: getting-started.md
