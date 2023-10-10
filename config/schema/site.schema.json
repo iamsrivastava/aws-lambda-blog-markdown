@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "site": {
+      "type": "object",
+      "properties": {
+        "logo": {
+          "type": "string"
+        },
+        "favicon": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "date_format": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "https": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "logo",
+        "favicon",
+        "title",
+        "description",
+        "date_format",
+        "domain",
+        "https"
+      ]
+    }
+  },
+  "required": [
+    "site"
+  ]
+}

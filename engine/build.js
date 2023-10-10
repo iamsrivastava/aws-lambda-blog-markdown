@@ -6,7 +6,8 @@ const path = require('path');
 const fs = require('fs');
 const Ajv = require('ajv');
 const yaml = require('js-yaml');
-
+const marked = require('marked');
+const cheerio = require('cheerio');
 // Get the path to the blog configuration directory from environment variables
 const blogConfigDir = process.env.BLOG_CONFIG_DIR;
 
@@ -34,6 +35,18 @@ const baseDir = path.dirname(path.dirname(scriptPath));
 // Create a path to the blog configuration directory based on the base directory
 const config = path.join(baseDir, blogConfigDir);
 
+const siteConfigFile = path.join(config, siteConfig)
+
+
+// Create a path to the JSON schema file for site validation
+const siteSchemaPath = path.join(config, 'schema', 'site.schema.json');
+
+// Read the JSON schema content from the schema file
+const siteSchemaContent = fs.readFileSync(siteSchemaPath, 'utf8');
+
+// Parse the JSON schema content into a JavaScript object
+const siteSchema = JSON.parse(siteSchemaContent);
+
 // Create a path to the 'blog' folder within the blog configuration directory
 const blogConfig = path.join(config, 'blog');
 
@@ -50,21 +63,123 @@ const schema = JSON.parse(schemaContent);
 const ajv = new Ajv();
 
 const build = async () => {
-    const blogConfig = await loadBlogConfig();
-    console.log(blogConfig)
+    const blogConfig = loadBlogConfig();
+    const siteConfig = loadSiteConfig();
+
+    buildBlog(blogConfig);
 }
 
 const buildIndex = async () => {
 
-}
-
-const buildBlog = async () => {
 
 }
+/**
+ * Build static blog pages based on provided blog configuration.
+ *
+ * This function generates static HTML pages for each blog post using a template.
+ * It reads Markdown content, converts it to HTML, injects it into the template,
+ * and applies SEO optimization.
+ *
+ * @param {Array<Object>} blogConfig - An array of blog post configurations.
+ * @throws {Error} If an error occurs during the build process.
+ */
+const buildBlog = (blogConfig) => {
+    try {
+        // Define paths for the blog view directory, blog HTML template, and build directory.
+        const blogViewDirPath = path.join(baseDir, viewDir, "blog");
+        const blogView = path.join(baseDir, viewDir, "blog.html");
+        const buildDirPath = path.join(baseDir, buildDir);
 
-const loadSiteConfig = async () => {
+        // Read the HTML template file.
+        const template = fs.readFileSync(blogView, 'utf-8');
 
-}
+        if (!fs.existsSync(buildDirPath)) {
+            // If the build folder doesn't exist, create it.
+            fs.mkdirSync(buildDirPath, {recursive: true});
+        } else {
+            // If the build folder exists, delete its contents.
+            deleteFilesUnderDir(buildDirPath);
+        }
+
+        // Iterate through each blog post configuration.
+        for (const config of blogConfig) {
+            const blogFile = path.join(blogViewDirPath, config.filename);
+            if (!fs.existsSync(blogFile)) {
+                // Log an error and exit if the blog file is not found.
+                logger.error(`File not found for blog ${config.filename}`);
+                process.exit(0);
+            }
+
+            // Log the start of the blog page build.
+            logger.info(`Build blog page for ${config.url}`);
+
+            // Read the content of the Markdown file.
+            const fileContent = fs.readFileSync(blogFile, 'utf8');
+
+            // Convert Markdown to HTML.
+            const htmlContent = marked.parse(fileContent);
+
+            // Inject the HTML content into the template.
+            const html = template.replace('<div id="markdown-content"></div>', `<div id="markdown-content">${htmlContent}</div>`);
+
+            // Apply SEO optimization.
+            const finalHTML = seo(html, config);
+
+            // Define the path for the output HTML file.
+            const outputFile = path.join(buildDirPath, `${config.url}.html`);
+
+            // Write the final HTML to a new file (e.g., 'output.html').
+            fs.writeFileSync(outputFile, finalHTML);
+
+        }
+    } catch (error) {
+        // Handle any errors that may occur during the blog build process.
+        logger.error(`Error building blog: ${error.message}`);
+        throw error;
+    }
+};
+
+
+/**
+ * Load and validate the site configuration from a YAML file.
+ *
+ * This function reads the content of a YAML file containing site configuration,
+ * validates it against a predefined JSON schema, and returns the configuration data.
+ * If the configuration is invalid, it logs errors and exits the process.
+ *
+ * @returns {Object} The site configuration data as a JavaScript object.
+ * @throws {Error} If the loaded configuration is invalid.
+ */
+const loadSiteConfig = () => {
+    try {
+        // Read the content of the YAML file
+        const fileContent = fs.readFileSync(siteConfigFile, 'utf8');
+
+        // Parse the YAML data into a JavaScript object
+        const yamlData = yaml.load(fileContent);
+
+        // Validate the YAML data against the predefined schema
+        const validate = validateConfig(yamlData, siteSchema);
+
+        // If the YAML data is not valid, log errors and exit the process
+        if (!validate.isValid) {
+            logger.error(`Invalid File ${siteConfigFile}. Errors are following:`);
+            const errors = validate.error;
+            for (const error of errors) {
+                logger.error(error.message);
+            }
+            process.exit(0);
+        }
+
+        // Return the validated site configuration data
+        return yamlData;
+    } catch (error) {
+        // Handle any unexpected errors that may occur
+        logger.error(`Error loading and validating site configuration: ${error.message}`);
+        throw error;
+    }
+};
+
 
 /**
  * Load and validate the blog configuration from YAML files.
@@ -76,10 +191,10 @@ const loadSiteConfig = async () => {
  * @returns {Array<Object>} An array of valid blog post configurations.
  * @throws {Error} If any of the loaded configurations are invalid.
  */
-const loadBlogConfig = async () => {
+const loadBlogConfig = () => {
     try {
         // Get the list of blog configuration files
-        const files = await getBlogConfigFiles();
+        const files = getBlogConfigFiles();
         const configs = [];
 
         // Iterate through each blog configuration file
@@ -128,7 +243,7 @@ const loadBlogConfig = async () => {
  *
  * @returns {Array<string>} An array of file paths to valid blog configuration files.
  */
-const getBlogConfigFiles = async () => {
+const getBlogConfigFiles = () => {
     try {
         // Read the list of files in the 'blogConfig' directory
         const files = fs.readdirSync(blogConfig);
@@ -181,5 +296,50 @@ const validateConfig = (fileContent, schema) => {
     }
 };
 
+
+/**
+ * Recursively delete files and subdirectories under a specified directory.
+ *
+ * This function deletes all files and subdirectories under the given directory path.
+ *
+ * @param {string} folderPath - The path to the directory to delete contents from.
+ * @throws {Error} If an error occurs while deleting files or directories.
+ */
+const deleteFilesUnderDir = (folderPath) => {
+    try {
+        // Get a list of all files and subdirectories in the folder
+        const folderContents = fs.readdirSync(folderPath);
+
+        // Loop through the folder contents and delete them
+        for (const item of folderContents) {
+            const itemPath = path.join(folderPath, item);
+
+            // Use fs.unlinkSync to delete files and fs.rmdirSync to delete directories
+            if (fs.statSync(itemPath).isFile()) {
+                fs.unlinkSync(itemPath); // Delete file
+            } else {
+                fs.rmdirSync(itemPath, {recursive: true}); // Delete directory and its contents
+            }
+        }
+    } catch (error) {
+        // Handle any errors that may occur during deletion
+        logger.error(`Error deleting files and directories under ${folderPath}: ${error.message}`);
+        throw error;
+    }
+};
+
+
+const seo = (html, config) => {
+    const $ = cheerio.load(html);
+    // Modify the title
+    $('title').text(config.title);
+
+// Modify the meta description
+    $('meta[name="description"]').attr('content', config.description);
+
+// Convert the modified HTML content back to a string
+    return $.html();
+
+}
 
 build();

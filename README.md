@@ -84,6 +84,12 @@ To get started with Dainiki, follow these steps:
 - [ ] Multiple User Support
   - Description: Allow multiple users with different roles and permissions to collaborate on the website.
 
+- [ ] Development on local with https and local dns setting
+  - Description: Development on a local environment with HTTPS and local DNS settings enables developers to create,
+    test, and debug web applications with the added security of HTTPS encryption and the flexibility of custom local
+    domain names. By configuring HTTPS certificates and local DNS records, developers can closely replicate the
+    conditions of a live production environment, ensuring seamless testing and a smoother transition to deployment.
+  -
 - [ ] Command Line Interface (CLI)
   - Create Blog
   - Create Blog Post

@@ -134,3 +134,4 @@ dist
 # Ignore build directory
 .serverless
 
+build/**

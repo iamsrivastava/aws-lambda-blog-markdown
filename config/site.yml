@@ -5,4 +5,6 @@ site:
   title: My Blog
   description: A collection of thoughts and ideas.
   date_format: dd-mm-yyyy
+  domain: ashishsrivastav.com
+  https: true
 
