@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "release": "standard-version"
+    "release": "semantic-release --branches main"
   },
   "repository": {
     "type": "git",
@@ -33,5 +33,10 @@
   },
   "devDependencies": {
     "semantic-release": "^22.0.5"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }
