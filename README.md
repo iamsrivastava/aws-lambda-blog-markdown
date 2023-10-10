@@ -1,6 +1,6 @@
 # AWS Lambda Blog Markdown - A Serverless Blogging Platform
 
-[![GitHub License](https://img.shields.io/github/license/iamsrivastava/aws-lambda-blog-markdown)](https://github.com/iamsrivastava/aws-lambda-blog-markdown/blob/main/LICENSE)
+[![License][License-Image]][License-Url] 
 
 AWS Lambda Blog Markdown is an open-source serverless blogging platform designed to make it easy for content creators to host and publish their blogs using Markdown on Amazon S3. With the power of AWS Lambda, you can create a highly scalable and cost-effective blog that's optimized for performance and SEO.
 
