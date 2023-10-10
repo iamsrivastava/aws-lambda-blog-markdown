@@ -84,5 +84,13 @@ To get started with blogy, follow these steps:
 - [ ] Multiple User Support
   - Description: Allow multiple users with different roles and permissions to collaborate on the website.
 
+- [ ] Command Line Interface (CLI)
+  - Create Blog
+  - Create Blog Post
+  - Create User
+  - Deploy
+  - Rollback Previous Version
+  - Hard Update
+
 Feel free to update the descriptions or add any additional details to each feature as needed. Once you've implemented these features, you can check off the corresponding checkboxes to track your progress.
 
