@@ -1,6 +1,8 @@
 # Dainiki (Daily) (दैनिकी) - A Serverless Blogging Platform
 
-[![License][License-Image]][License-Url] [![Node](https://img.shields.io/badge/-Node.js-808080?logo=node.js&colorA=404040&logoColor=66cc33)](https://www.npmjs.com/package/preferred-node-version)
+[![License][License-Image]][License-Url] [![Node](https://img.shields.io/badge/-Node.js-808080?logo=node.js&colorA=404040&logoColor=66cc33)](https://www.npmjs.com/package/preferred-node-version) [![GitHub contributors](https://img.shields.io/github/contributors/iamsrivastava/dainiki.svg)](https://github.com/iamsrivastava/dainiki/graphs/contributors)
+
+
 
 
 Dainiki is an open-source serverless blogging platform designed to make it easy for content creators to host and publish their blogs using Markdown on Amazon S3. With the power of AWS Lambda, you can create a highly scalable and cost-effective blog that's optimized for performance and SEO.
