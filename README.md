@@ -1,4 +1,4 @@
-# Dainiki (Dairy) (दैनिकी) - A Serverless Blogging Platform
+# Dainiki (Daily) (दैनिकी) - A Serverless Blogging Platform
 
 [![License][License-Image]][License-Url] [![Node](https://img.shields.io/badge/-Node.js-808080?logo=node.js&colorA=404040&logoColor=66cc33)](https://www.npmjs.com/package/preferred-node-version)
 
