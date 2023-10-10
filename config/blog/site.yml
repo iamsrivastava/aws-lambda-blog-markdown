@@ -1,0 +1,6 @@
+# Top-level configuration settings
+site:
+  logo: /images/logo.png
+  favicon: /favicon.ico
+  title: My Blog
+  description: A collection of thoughts and ideas.
