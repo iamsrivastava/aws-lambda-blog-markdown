@@ -3,7 +3,7 @@
 [![License][License-Image]][License-Url] [![Node](https://img.shields.io/badge/-Node.js-808080?logo=node.js&colorA=404040&logoColor=66cc33)](https://www.npmjs.com/package/preferred-node-version)
 
 
-blogy is an open-source serverless blogging platform designed to make it easy for content creators to host and publish their blogs using Markdown on Amazon S3. With the power of AWS Lambda, you can create a highly scalable and cost-effective blog that's optimized for performance and SEO.
+Dainiki is an open-source serverless blogging platform designed to make it easy for content creators to host and publish their blogs using Markdown on Amazon S3. With the power of AWS Lambda, you can create a highly scalable and cost-effective blog that's optimized for performance and SEO.
 
 [License-Url]: https://www.apache.org/licenses/LICENSE-2.0
 [License-Image]: https://img.shields.io/badge/License-Apache2-blue.svg
@@ -33,12 +33,12 @@ blogy is an open-source serverless blogging platform designed to make it easy fo
 
 ## Getting Started
 
-To get started with blogy, follow these steps:
+To get started with Dainiki, follow these steps:
 
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/iamsrivastava/blogy.git
+   git clone https://github.com/iamsrivastava/Dainiki.git
 2. Configure your AWS credentials and settings in the provided configuration files.
 
 3. Deploy the application to AWS Lambda and set up your Amazon S3 bucket for hosting.
