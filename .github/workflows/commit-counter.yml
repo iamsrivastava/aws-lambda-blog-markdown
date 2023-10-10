@@ -1,4 +1,4 @@
-name: Commit Counter
+name: Lines of Code
 
 on:
   push:
@@ -6,15 +6,19 @@ on:
       - main
 
 jobs:
-  count-commits:
+  lines-of-code:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Count Commits
-        id: commit-count
-        run: echo "::set-output name=commits::$(git rev-list --count HEAD)"
+      - name: Count Lines of Code
+        id: cloc
+        run: |
+          lines=$(find . -type f -name '*.js' -o -name '*.html' -o -name '*.css' | xargs cat | wc -l)
+          echo "::set-output name=lines::$lines"
 
-      - name: Display Commit Count
-        run: echo "Total Commits: ${{steps.commit-count.outputs.commits}}"
+      - name: Update Lines of Code Badge
+        run: |
+          echo "![Lines of Code](https://img.shields.io/badge/Lines%20of%20Code-${{ steps.cloc.outputs.lines }}-brightgreen)"
+          # Replace the following line with a command to update a specific section of your README with the badge.
