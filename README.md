@@ -1,4 +1,4 @@
-# blogy - A Serverless Blogging Platform
+# Dainiki (Dairy) (दैनिकी) - A Serverless Blogging Platform
 
 [![License][License-Image]][License-Url] 
 
