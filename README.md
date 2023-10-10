@@ -45,3 +45,32 @@ To get started with blogy, follow these steps:
 4. Start writing your blog posts in Markdown and upload them to your S3 bucket.
 
 5. Access your blog and start sharing your content with the world!
+
+# Upcoming Blogging Features
+- [ ] Blog with Article and Static Pages with Configuration
+  - Description: Create and manage blog articles and static pages with various configuration options.
+- [ ] Meta Data Support (OG Tags)
+  - Description: Implement Open Graph (OG) meta tags for improved social media sharing.
+- [ ] Google Analytics
+  - Description: Integrate Google Analytics for tracking website traffic and user behavior.
+- [ ] Schema Support
+  - Description: Implement structured data using schema markup for better search engine visibility.
+- [ ] Interface for Blog List
+  - Description: Design a user-friendly blog list interface for listing all articles.
+- [ ] Interface for Blog Page
+  - Description: Create an individual blog page with detailed content and features.
+- [ ] Similar Blog Section
+  - Description: Display a section for showing similar or related blog articles.
+- [ ] Tag Cloud
+  - Description: Include a tag cloud for easy navigation and content discovery.
+- [ ] Dashboard for Managing Blog Posts
+  - Description: Build an admin dashboard for creating, editing, and managing blog posts.
+- [ ] Dashboard for Site Management
+  - Description: Develop a site management dashboard for configuring website settings and user roles.
+- [ ] Dashboard for Analytics
+  - Description: Create a dedicated analytics dashboard for monitoring website performance.
+- [ ] Multiple User Support
+  - Description: Allow multiple users with different roles and permissions to collaborate on the website.
+
+Feel free to update the descriptions or add any additional details to each feature as needed. Once you've implemented these features, you can check off the corresponding checkboxes to track your progress.
+
