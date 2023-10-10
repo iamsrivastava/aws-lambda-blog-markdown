@@ -8,6 +8,7 @@ const Ajv = require('ajv');
 const yaml = require('js-yaml');
 const marked = require('marked');
 const cheerio = require('cheerio');
+const ejs = require('ejs');
 // Get the path to the blog configuration directory from environment variables
 const blogConfigDir = process.env.BLOG_CONFIG_DIR;
 
@@ -22,6 +23,7 @@ const viewDir = process.env.VIEW_DIR;
 
 // Import the Logger class from a module named "@sailplane/logger"
 const {Logger} = require("@sailplane/logger");
+const {minify} = require("html-minifier");
 
 // Create a logger instance with the name 'dainiki-build'
 const logger = new Logger('dainiki-build');
@@ -67,11 +69,24 @@ const build = async () => {
     const siteConfig = loadSiteConfig();
 
     buildBlog(blogConfig);
+    buildIndex(siteConfig, blogConfig)
 }
 
-const buildIndex = async () => {
+const buildIndex = (siteConfig, blogConfig) => {
+    const index = path.join(baseDir, viewDir, "index.html");
+    const buildIndex = path.join(buildDir, "index.html");
+    const template = fs.readFileSync(index, 'utf-8');
 
+    // Render the template with the data
+    const htmlContent = ejs.render(template, {blogConfig});
 
+    // Apply SEO optimization.
+    const seoHtml = seo(htmlContent, config);
+
+    const minified = minifyPage(seoHtml)
+
+    // Write the final HTML to a new file (e.g., 'output.html').
+    fs.writeFileSync(buildIndex, minified, 'utf-8');
 }
 /**
  * Build static blog pages based on provided blog configuration.
@@ -122,14 +137,16 @@ const buildBlog = (blogConfig) => {
             // Inject the HTML content into the template.
             const html = template.replace('<div id="markdown-content"></div>', `<div id="markdown-content">${htmlContent}</div>`);
 
-            // Apply SEO optimization.
-            const finalHTML = seo(html, config);
 
+            // Apply SEO optimization.
+            const seoHtml = seo(html, config);
+
+            const minified = minifyPage(seoHtml)
             // Define the path for the output HTML file.
             const outputFile = path.join(buildDirPath, `${config.url}.html`);
 
             // Write the final HTML to a new file (e.g., 'output.html').
-            fs.writeFileSync(outputFile, finalHTML);
+            fs.writeFileSync(outputFile, minified);
 
         }
     } catch (error) {
@@ -340,6 +357,17 @@ const seo = (html, config) => {
 // Convert the modified HTML content back to a string
     return $.html();
 
+}
+
+const minifyPage = (optimizedHtml) => {
+    // Minify the HTML using html-minifier
+    return minify(optimizedHtml, {
+        collapseWhitespace: true, // Minify whitespace
+        removeComments: true,      // Remove HTML comments
+        removeEmptyAttributes: true, // Remove empty attributes
+        minifyJS: true,           // Minify inline JavaScript
+        minifyCSS: true,          // Minify inline CSS
+    });
 }
 
 build();
